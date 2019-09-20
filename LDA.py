@@ -23,28 +23,16 @@ class LDA(object):
         for i in range(X.shape[1]):
             self.u0.append(0)
             self.u1.append(1)
-        """
-        for i in range(len(y)):
-            if y[i] == 0: 
-                for j in range(X.shape[1]):
-                    u0[j] += X[i][j]/p.count(0)
-            elif y[i] == 1:
-                for j in range(X.shape[1]):
-                    u1[j] += X[i][j]/p.count(1)
-        """
         for i in range(len(y)):
             if y[i] == 0:
-                #np.sum([self.u0, float(X[i]/zeros)],axis=0)
                 self.u0 += X[i]/ zeros
             elif y[i] == 1:
-                #np.sum([self.u1,X[i]/ones],axis=0)
                 self.u1 += X[i] / ones
         for i in range(len(y)):
             if y[i] == 0:
                 self.sigma += (np.asmatrix((X[i] - self.u0)).transpose()).dot((np.asmatrix((X[i] - self.u0))))/(zeros + ones + 2)
             elif y[i] == 1:
                 self.sigma += (np.asmatrix((X[i] - self.u1)).transpose()).dot((np.asmatrix((X[i] - self.u1))))/(zeros + ones + 2)
-            #print (self.sigma)
 
     def predict(self, X):
         y = []
