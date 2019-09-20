@@ -7,10 +7,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 
 # useful global variables
-wines_header = []
-tumors_header = []
-wines_global = []
-tumors_global = []
+wines_header, tumors_header, wines_global,tumors_global = [],[],[],[]
 
 
 def process_wines():
