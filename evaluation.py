@@ -9,6 +9,7 @@ import math
 import seaborn as sns
 import matplotlib.pyplot as plt
 from pre_process import *
+from LDA import *
 
 def evaluation(prediction: np.ndarray, groundtruth: np.ndarray):
     # sanity check
@@ -87,4 +88,10 @@ def cross_validation(model, data: np.ndarray, k: int):
 # from sklearn.svm import SVC
 # clf = SVC(kernel='linear')
 # print(cross_validation(clf,process_wines(),5))
-
+"""
+X_wines, y_wines = process_wines()
+clf = LDA(X_wines[:int(0.7*len(X_wines))])
+clf.fit(X_wines[:int(0.7*len(X_wines))], y_wines[:int(0.7*len(X_wines))])
+predicted_y = clf.predict(X_wines[int(0.7*len(X_wines)):])
+print(accuracy(predicted_y,y_wines[int(0.7*len(X_wines)):]))
+"""
