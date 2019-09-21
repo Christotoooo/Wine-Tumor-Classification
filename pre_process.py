@@ -9,6 +9,10 @@ import matplotlib.pyplot as plt
 # useful global variables
 wines_header, tumors_header, wines_global,tumors_global = [],[],[],[]
 
+def normalize(x):
+    if max(x) == min(x):
+        return x
+    return x / (max(x) - min(x))
 
 def process_wines():
     with open("winequality-red.csv", 'r') as f:
@@ -33,7 +37,13 @@ def process_wines():
 
     global wines_global
     wines_global = wines
-    return wines[:, :-1], wines[:, -1]
+    wines_x = wines[:,:-1]
+    wines_y = wines[:,-1]
+
+    for i in range(len(wines_x)):
+        wines_x[i] = normalize(wines_x[i])
+
+    return wines_x, wines_y
 
 
 def process_tumors():
@@ -63,13 +73,18 @@ def process_tumors():
     for i in invalid_index:
         tumors.remove(tumors[i])
 
-    tumors = np.array(tumors[0:], dtype=np.int)
+    tumors = np.array(tumors[0:], dtype=np.float)
     tumors = tumors[:, 1:]
 
     global tumors_global
     tumors_global = tumors
+    tumors_x = tumors[:,:-1]
+    tumors_y = tumors[:,-1]
 
-    return tumors[:, :-1], tumors[:, -1]
+    for i in range(len(tumors_x)):
+        tumors_x[i] = normalize(tumors_x[i])
+
+    return tumors_x, tumors_y
 
 
 def stats_wines():
@@ -119,3 +134,12 @@ def stats_tumors():
     df_pos.describe()
     df_neg = pd.DataFrame(neg_tumors, columns=tumors_header)
     df_neg.describe()
+
+x,y = process_tumors()
+print(wines_global)
+print(x)
+print(y)
+# for i in range(len(x)):
+#     for j in range(len(x[0])):
+#         if math.isnan(x[i][j]):
+#             print(i,j)

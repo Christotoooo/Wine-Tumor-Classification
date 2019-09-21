@@ -104,39 +104,44 @@ def cross_validation(model,x: np.ndarray,y: np.ndarray, k: int):
 # print(accuracy(predicted_y,y_wines[int(0.7*len(X_wines)):]))
 
 X_wines, y_wines = process_wines()
-clf = LDA(X_wines[:int(0.2*len(X_wines))])
-print(cross_validation(clf,X_wines,y_wines,5))
+clf = LDA(X_wines[:int(0.8*len(X_wines))])
+print("LDA on wines",cross_validation(clf,X_wines,y_wines,5))
 
 
 X_wines, y_wines = process_wines()
-clf = Logistic(0.01,100)
-print(cross_validation(clf,X_wines,y_wines,5))
+clf = Logistic(0.001,100)
+print("LR on wines",cross_validation(clf,X_wines,y_wines,5))
 
 
 
 X_tumors, y_tumors = process_tumors()
 clf = LDA(X_tumors[:int(0.8*len(X_tumors))])
-# print(cross_validation(clf,X_tumors,y_tumors,5))
-clf.fit(X_tumors[:int(0.9*len(X_tumors))], y_tumors[:int(0.9*len(X_tumors))])
-predicted_y = clf.predict(X_tumors[int(0.9*len(X_tumors)):])
-print(accuracy(predicted_y,y_tumors[int(0.9*len(X_tumors)):]))
+print("LDA on tumors",cross_validation(clf,X_tumors,y_tumors,5))
+# clf.fit(X_tumors[:int(0.9*len(X_tumors))], y_tumors[:int(0.9*len(X_tumors))])
+# predicted_y = clf.predict(X_tumors[int(0.9*len(X_tumors)):])
+# print("LDA on tumors",accuracy(predicted_y,y_tumors[int(0.9*len(X_tumors)):]))
 
 X_tumors, y_tumors = process_tumors()
-clf = Logistic(0.01,100)
-# print(cross_validation(clf,X_tumors,y_tumors,5))
-clf.fit(X_tumors[:int(0.9*len(X_tumors))], y_tumors[:int(0.9*len(X_tumors))])
-predicted_y = clf.predict(X_tumors[int(0.9*len(X_tumors)):])
-print(accuracy(predicted_y,y_tumors[int(0.9*len(X_tumors)):]))
-#
+clf = Logistic(0.1,1000)
+print("LR on tumors",cross_validation(clf,X_tumors,y_tumors,5))
+# clf.fit(X_tumors[:int(0.9*len(X_tumors))], y_tumors[:int(0.9*len(X_tumors))])
+# predicted_y = clf.predict(X_tumors[int(0.9*len(X_tumors)):])
+# print("LR on tumors",accuracy(predicted_y,y_tumors[int(0.9*len(X_tumors)):]))
+# #
 # X_tumors, y_tumors = process_tumors()
 # clf = Logistic(0.01,100)
 # print(cross_validation(clf,X_tumors,y_tumors,5))
 #
 
+from sklearn.linear_model import LogisticRegression
+clf = LogisticRegression(penalty='l2')
+X_wines, y_wines = process_wines()
+print("sk learn ",cross_validation(clf,X_wines,y_wines,5))
 
 from sklearn.linear_model import LogisticRegression
 clf = LogisticRegression(penalty='l2')
 X_tumors, y_tumors = process_tumors()
 print("sk learn ",cross_validation(clf,X_tumors,y_tumors,5))
 
-print(X_tumors,y_tumors)
+
+#print(X_tumors,y_tumors)
