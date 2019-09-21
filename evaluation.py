@@ -10,6 +10,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 from pre_process import *
 from LDA import *
+from Logistic import *
 
 def evaluation(prediction: np.ndarray, groundtruth: np.ndarray):
     # sanity check
@@ -54,7 +55,13 @@ def merge_chunks(data_split,indices):
         
 
 
-def cross_validation(model, data: np.ndarray, k: int):
+def cross_validation(model,x: np.ndarray,y: np.ndarray, k: int):
+    
+    data = np.zeros((len(x),len(x[0])+1))
+    #combine and save to "data"
+    for i in range(len(x)):
+        data[i] = np.append(x[i],[y[i]])
+    # print(data)
     np.random.shuffle(data)
     data_split = np.array_split(data,k)
     indices = set(range(k)) # a set containing 0 to k-1
@@ -79,8 +86,9 @@ def cross_validation(model, data: np.ndarray, k: int):
 #  # Testing Cross-Validation by using scikit learn packages (which should be commented out before submission)
 # from sklearn.linear_model import LogisticRegression
 # clf = LogisticRegression(penalty='l2')
-# print(cross_validation(clf,process_wines(),5))
-#
+# X_wines, y_wines = process_wines()
+# print(cross_validation(clf,X_wines,y_wines,5))
+
 # from sklearn.naive_bayes import GaussianNB
 # clf = GaussianNB()
 # print(cross_validation(clf,process_wines(),5))
@@ -88,10 +96,47 @@ def cross_validation(model, data: np.ndarray, k: int):
 # from sklearn.svm import SVC
 # clf = SVC(kernel='linear')
 # print(cross_validation(clf,process_wines(),5))
-"""
+
+# X_wines, y_wines = process_wines()
+# clf = LDA(X_wines[:int(0.7*len(X_wines))])
+# clf.fit(X_wines[:int(0.7*len(X_wines))], y_wines[:int(0.7*len(X_wines))])
+# predicted_y = clf.predict(X_wines[int(0.7*len(X_wines)):])
+# print(accuracy(predicted_y,y_wines[int(0.7*len(X_wines)):]))
+
 X_wines, y_wines = process_wines()
-clf = LDA(X_wines[:int(0.7*len(X_wines))])
-clf.fit(X_wines[:int(0.7*len(X_wines))], y_wines[:int(0.7*len(X_wines))])
-predicted_y = clf.predict(X_wines[int(0.7*len(X_wines)):])
-print(accuracy(predicted_y,y_wines[int(0.7*len(X_wines)):]))
-"""
+clf = LDA(X_wines[:int(0.2*len(X_wines))])
+print(cross_validation(clf,X_wines,y_wines,5))
+
+
+X_wines, y_wines = process_wines()
+clf = Logistic(0.01,100)
+print(cross_validation(clf,X_wines,y_wines,5))
+
+
+
+X_tumors, y_tumors = process_tumors()
+clf = LDA(X_tumors[:int(0.8*len(X_tumors))])
+# print(cross_validation(clf,X_tumors,y_tumors,5))
+clf.fit(X_tumors[:int(0.9*len(X_tumors))], y_tumors[:int(0.9*len(X_tumors))])
+predicted_y = clf.predict(X_tumors[int(0.9*len(X_tumors)):])
+print(accuracy(predicted_y,y_tumors[int(0.9*len(X_tumors)):]))
+
+X_tumors, y_tumors = process_tumors()
+clf = Logistic(0.01,100)
+# print(cross_validation(clf,X_tumors,y_tumors,5))
+clf.fit(X_tumors[:int(0.9*len(X_tumors))], y_tumors[:int(0.9*len(X_tumors))])
+predicted_y = clf.predict(X_tumors[int(0.9*len(X_tumors)):])
+print(accuracy(predicted_y,y_tumors[int(0.9*len(X_tumors)):]))
+#
+# X_tumors, y_tumors = process_tumors()
+# clf = Logistic(0.01,100)
+# print(cross_validation(clf,X_tumors,y_tumors,5))
+#
+
+
+from sklearn.linear_model import LogisticRegression
+clf = LogisticRegression(penalty='l2')
+X_tumors, y_tumors = process_tumors()
+print("sk learn ",cross_validation(clf,X_tumors,y_tumors,5))
+
+print(X_tumors,y_tumors)
