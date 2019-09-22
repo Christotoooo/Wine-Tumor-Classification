@@ -9,7 +9,7 @@ import math
 import seaborn as sns
 import matplotlib.pyplot as plt
 from pre_process import *
-from LDA import *
+#from LDA import *
 from Logistic import *
 
 def evaluation(prediction: np.ndarray, groundtruth: np.ndarray):
@@ -31,7 +31,7 @@ def evaluation(prediction: np.ndarray, groundtruth: np.ndarray):
     return tn,fp,fn,tp
 
 
-################ This is the function to call for "Accuracy"############
+############ This is the function to call for "Accuracy"############
 def evaluate_acc(prediction: np.ndarray, groundtruth: np.ndarray):
     tn,fp,fn,tp = evaluation(prediction,groundtruth)
     return 1.0*(tp+tn)/(tp+tn+fp+fn)
@@ -78,6 +78,8 @@ def cross_validation(model,x: np.ndarray,y: np.ndarray, k: int):
         
         model.fit(x_train,y_train)
         y_prediction = model.predict(x_test)
+        # model.fit(0.01,100)
+        # y_prediction = model.predict(x_test)
         
         acc_list.append(evaluate_acc(y_prediction,y_test))
     return sum(acc_list) / len(acc_list)
@@ -116,9 +118,13 @@ def cross_validation(model,x: np.ndarray,y: np.ndarray, k: int):
 # # print("LDA on wines",cross_validation(clf,X_wines,y_wines,5))
 # #
 # #
-# X_wines, y_wines = process_wines()
-# clf = Logistic(0.001,100)
-# print("LR on wines",cross_validation(clf,X_wines,y_wines,5))
+X_wines, y_wines = process_wines()
+clf = Logistic(0.01,100)
+print("LR on wines",cross_validation(clf,X_wines,y_wines,5))
+#
+X_tumors, y_tumors = process_tumors()
+clf = Logistic(0.01,100)
+print("LR on tumors",cross_validation(clf,X_tumors,y_tumors,5))
 #
 #
 #

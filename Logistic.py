@@ -42,15 +42,18 @@ class Logistic(object):
         numOfRow = len(trainingDataMatrixX)
         numOfColumn = len(trainingDataMatrixX[0])
         MatrixAddAll = []
-    
-        for num in range(0, numOfColumn + 1):
-            self.weights.append(1)
-            MatrixAddAll.append(0)
+        if len(self.weights) > 0:
+            for num in range(0, numOfColumn + 1):
+                MatrixAddAll.append(0)
+        else:
+            for num in range(0, numOfColumn + 1):
+                self.weights.append(1)
+                MatrixAddAll.append(0)
         
         for num in range(0, self.gradientDescentIterations):
             for numOne in range(0, numOfRow):
                 MaX = trainingDataMatrixX[numOne]
-                MaX = np.append(MaX, [1])
+                MaX = np.append([1],MaX)
                 matrixAdd = self.addUps(self.weights, MaX, trainingDataMatrixY[numOne])
                 for numTwo in range(0, numOfColumn + 1):
                     MatrixAddAll[numTwo] = matrixAdd[numTwo] + MatrixAddAll[numTwo]
@@ -60,6 +63,8 @@ class Logistic(object):
                 self.weights[numFour] = self.weights[numFour] + MatrixAddAll[numFour]
             for numFive in range(0, numOfColumn + 1):
                 MatrixAddAll[numFive] = 0
+
+        #print(self.weights)
         return
 
     def predict(self, trainingDataMatrixX):

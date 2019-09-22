@@ -37,19 +37,19 @@ def process_wines():
 
     global wines_global
     wines_global = wines
-    wines_x = wines[:,:-1]
+    wines_x = wines[:, :-1]
     # wines_x = np.delete(wines_x,10,axis=1)
     # wines_x = np.delete(wines_x,9,axis=1)
-    wines_x = np.delete(wines_x,8,axis=1)
-    wines_x = np.delete(wines_x,7,axis=1)
-    wines_x = np.delete(wines_x,6,axis=1)
-    wines_x = np.delete(wines_x,5,axis=1)
-    wines_x = np.delete(wines_x,4,axis=1)
-    wines_x = np.delete(wines_x,3,axis=1)
+    # wines_x = np.delete(wines_x,8,axis=1)
+    # wines_x = np.delete(wines_x,7,axis=1)
+    # wines_x = np.delete(wines_x,6,axis=1)
+    # wines_x = np.delete(wines_x,5,axis=1)
+    # wines_x = np.delete(wines_x,4,axis=1)
+    # wines_x = np.delete(wines_x,3,axis=1)
     # wines_x = np.delete(wines_x,2,axis=1)
     # wines_x = np.delete(wines_x,1,axis=1)
-    wines_x = np.delete(wines_x, 0, axis=1)
-    wines_y = wines[:,-1]
+    # wines_x = np.delete(wines_x, 0, axis=1)
+    wines_y = wines[:, -1]
 
     for i in range(len(wines_x)):
         wines_x[i] = normalize(wines_x[i])
