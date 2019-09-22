@@ -64,7 +64,7 @@ class Logistic(object):
             for numFive in range(0, numOfColumn + 1):
                 MatrixAddAll[numFive] = 0
 
-        #print(self.weights)
+        print(self.weights)
         return
 
     def predict(self, trainingDataMatrixX):
@@ -74,6 +74,7 @@ class Logistic(object):
             sig = self.weights[0]
             for num in range(0, len(MatrixTemp)):
                 sig = sig + self.weights[num + 1] * MatrixTemp[num]
+            #if self.sigmoid(sig) >= 0.5:
             if sig >= 0.5:
                 outPutY.append(1)
             else:
