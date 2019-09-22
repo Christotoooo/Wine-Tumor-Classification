@@ -9,10 +9,10 @@ import matplotlib.pyplot as plt
 # useful global variables
 wines_header, tumors_header, wines_global,tumors_global = [],[],[],[]
 
-# def normalize(x):
-#     if max(x) == min(x):
-#         return x
-#     return x / (max(x) - min(x))
+def normalize(x):
+    if max(x) == min(x):
+        return x
+    return x / (max(x) - min(x))
 
 def process_wines():
     with open("winequality-red.csv", 'r') as f:
@@ -46,8 +46,8 @@ def process_wines():
     # wines_x = np.delete(wines_x,9,axis=1)
     # wines_x = np.delete(wines_x,8,axis=1)
     wines_x = np.delete(wines_x,7,axis=1)
-    # # wines_x = np.delete(wines_x,6,axis=1)
-    # # wines_x = np.delete(wines_x,5,axis=1)
+    # wines_x = np.delete(wines_x,6,axis=1)
+    # wines_x = np.delete(wines_x,5,axis=1)
     wines_x = np.delete(wines_x,4,axis=1)
     wines_x = np.delete(wines_x,3,axis=1)
     # wines_x = np.delete(wines_x,2,axis=1)
@@ -55,8 +55,8 @@ def process_wines():
     # wines_x = np.delete(wines_x, 0, axis=1)
     wines_y = wines[:, -1]
     #
-    # for i in range(len(wines_x)):
-    #     wines_x[i] = normalize(wines_x[i])
+    for i in range(len(wines_x)):
+        wines_x[i] = normalize(wines_x[i])
 
     return wines_x, wines_y
 
