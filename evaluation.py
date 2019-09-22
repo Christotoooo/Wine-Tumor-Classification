@@ -32,7 +32,7 @@ def evaluation(prediction: np.ndarray, groundtruth: np.ndarray):
 
 
 ################ This is the function to call for "Accuracy"############
-def accuracy(prediction: np.ndarray, groundtruth: np.ndarray):
+def evaluate_acc(prediction: np.ndarray, groundtruth: np.ndarray):
     tn,fp,fn,tp = evaluation(prediction,groundtruth)
     return 1.0*(tp+tn)/(tp+tn+fp+fn)
 
@@ -79,7 +79,7 @@ def cross_validation(model,x: np.ndarray,y: np.ndarray, k: int):
         model.fit(x_train,y_train)
         y_prediction = model.predict(x_test)
         
-        acc_list.append(accuracy(y_prediction,y_test))
+        acc_list.append(evaluate_acc(y_prediction,y_test))
     return sum(acc_list) / len(acc_list)
 
 
@@ -101,7 +101,7 @@ def cross_validation(model,x: np.ndarray,y: np.ndarray, k: int):
 # clf = LDA(X_wines[:int(0.7*len(X_wines))])
 # clf.fit(X_wines[:int(0.7*len(X_wines))], y_wines[:int(0.7*len(X_wines))])
 # predicted_y = clf.predict(X_wines[int(0.7*len(X_wines)):])
-# print(accuracy(predicted_y,y_wines[int(0.7*len(X_wines)):]))
+# print(evaluate_acc(predicted_y,y_wines[int(0.7*len(X_wines)):]))
 
 # X_wines, y_wines = process_wines()
 # clf = LDA()
@@ -127,14 +127,14 @@ def cross_validation(model,x: np.ndarray,y: np.ndarray, k: int):
 # print("LDA on tumors",cross_validation(clf,X_tumors,y_tumors,5))
 # # clf.fit(X_tumors[:int(0.9*len(X_tumors))], y_tumors[:int(0.9*len(X_tumors))])
 # # predicted_y = clf.predict(X_tumors[int(0.9*len(X_tumors)):])
-# # print("LDA on tumors",accuracy(predicted_y,y_tumors[int(0.9*len(X_tumors)):]))
+# # print("LDA on tumors",evaluate_acc(predicted_y,y_tumors[int(0.9*len(X_tumors)):]))
 #
 # X_tumors, y_tumors = process_tumors()
 # clf = Logistic(0.01,100)
 # print("LR on tumors",cross_validation(clf,X_tumors,y_tumors,5))
 # # clf.fit(X_tumors[:int(0.9*len(X_tumors))], y_tumors[:int(0.9*len(X_tumors))])
 # # predicted_y = clf.predict(X_tumors[int(0.9*len(X_tumors)):])
-# # print("LR on tumors",accuracy(predicted_y,y_tumors[int(0.9*len(X_tumors)):]))
+# # print("LR on tumors",evaluate_acc(predicted_y,y_tumors[int(0.9*len(X_tumors)):]))
 # # #
 # # X_tumors, y_tumors = process_tumors()
 # # clf = Logistic(0.01,100)
