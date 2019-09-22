@@ -29,8 +29,8 @@ class Logistic(object):
         addOn = 0.0
         for num in range(0, len(MatrixX)):
             addOn = addOn + MatrixW[num] * MatrixX[num]
-            addOn = Y - self.sigmoid(addOn)
-            MatrixAdd = []
+        addOn = Y - self.sigmoid(addOn)
+        MatrixAdd = []
     
         for num in range(0, len(MatrixX)):
             MatrixAdd.append(MatrixX[num] * addOn)
@@ -47,7 +47,7 @@ class Logistic(object):
                 MatrixAddAll.append(0)
         else:
             for num in range(0, numOfColumn + 1):
-                self.weights.append(1)
+                self.weights.append(0.01)
                 MatrixAddAll.append(0)
         
         for num in range(0, self.gradientDescentIterations):
@@ -64,7 +64,7 @@ class Logistic(object):
             for numFive in range(0, numOfColumn + 1):
                 MatrixAddAll[numFive] = 0
 
-        print(self.weights)
+        #print(self.weights)
         return
 
     def predict(self, trainingDataMatrixX):
@@ -75,7 +75,9 @@ class Logistic(object):
             for num in range(0, len(MatrixTemp)):
                 sig = sig + self.weights[num + 1] * MatrixTemp[num]
             #if self.sigmoid(sig) >= 0.5:
-            if sig >= 0.5:
+            # print("gamma",sig)
+            # print("sigmoid",self.sigmoid(sig))
+            if self.sigmoid(sig) >= 0.5:
                 outPutY.append(1)
             else:
                 outPutY.append(0)
