@@ -38,6 +38,17 @@ def process_wines():
     global wines_global
     wines_global = wines
     wines_x = wines[:,:-1]
+    # wines_x = np.delete(wines_x,10,axis=1)
+    # wines_x = np.delete(wines_x,9,axis=1)
+    wines_x = np.delete(wines_x,8,axis=1)
+    wines_x = np.delete(wines_x,7,axis=1)
+    wines_x = np.delete(wines_x,6,axis=1)
+    wines_x = np.delete(wines_x,5,axis=1)
+    wines_x = np.delete(wines_x,4,axis=1)
+    wines_x = np.delete(wines_x,3,axis=1)
+    # wines_x = np.delete(wines_x,2,axis=1)
+    # wines_x = np.delete(wines_x,1,axis=1)
+    wines_x = np.delete(wines_x, 0, axis=1)
     wines_y = wines[:,-1]
 
     for i in range(len(wines_x)):
@@ -79,6 +90,7 @@ def process_tumors():
     global tumors_global
     tumors_global = tumors
     tumors_x = tumors[:,:-1]
+    #tumors_x = np.delete(tumors_x,3,axis=1) #
     tumors_y = tumors[:,-1]
 
     for i in range(len(tumors_x)):
@@ -135,10 +147,10 @@ def stats_tumors():
     df_neg = pd.DataFrame(neg_tumors, columns=tumors_header)
     df_neg.describe()
 
-x,y = process_tumors()
-print(wines_global)
-print(x)
-print(y)
+# x,y = process_tumors()
+# print(wines_global)
+# print(x)
+# print(y)
 # for i in range(len(x)):
 #     for j in range(len(x[0])):
 #         if math.isnan(x[i][j]):

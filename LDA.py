@@ -1,46 +1,59 @@
-import pre_process
+#!/usr/bin/env python
+# coding: utf-8
+
 import numpy as np
-import pandas as pd
-import csv
-from tqdm import tqdm
-import math
-import seaborn as sns
-import matplotlib.pyplot as plt
 
-
-class LDA(object):
-    def __init__(self, X):
-        self.p = np.array([0, 0])
-        self.u0 = np.zeros(len(X[0]))
-        self.u1 = np.zeros(len(X[0]))
-        self.sigma = np.zeros((len(X[0]), len(X[0])))
+class LDA:
+    def __init__(self):
+        self.W0 = 0
+        self.W = []
 
     def fit(self, X, y):
-        zeros = np.count_nonzero(y == 0)
-        ones = np.count_nonzero(y == 1)
-        self.p[0] = float(zeros / (ones + zeros))
-        self.p[1] = float(ones / (ones + zeros))
-        for i in range(len(y)):
-            if y[i] == 0:
-                self.u0 += X[i]/ zeros
-            elif y[i] == 1:
-                self.u1 += X[i] / ones
-        for i in range(len(y)):
-            if y[i] == 0:
-                self.sigma += (np.asmatrix((X[i] - self.u0)).transpose()).dot((np.asmatrix((X[i] - self.u0))))/(zeros + ones - 2)
-            elif y[i] == 1:
-                self.sigma += (np.asmatrix((X[i] - self.u1)).transpose()).dot((np.asmatrix((X[i] - self.u1))))/(zeros + ones - 2)
+        ones = np.count_nonzero(y)
+        zeros = y.size - ones
+        p = [zeros/(zeros+ones), ones/(zeros+ones)]
+        
+        u0 = [0] * (np.size(X, 1))
+        u1 = [0] * (np.size(X, 1))
+        
+        class0 = []
+        class1 = []
+        
+        for index, data in enumerate(X):
+            if y[index] == 0:
+                u0=[sum(x) for x in zip(u0, data)]
+                class0.append(data)
+            if y[index] == 1:
+                u1=[sum(x) for x in zip(u1, data)]
+                class1.append(data)
+                
+        u0[:] = [x/zeros for x in u0]
+        u1[:] = [x/ones for x in u1]
 
-    def predict(self, X):
-        y = []
-        for data in X:
-            logodds = math.log(self.p[1]/self.p[0])-0.5*np.dot(np.dot(self.u1, np.linalg.inv(self.sigma)),self.u1.transpose())+0.5*np.dot(np.dot(self.u0, np.linalg.inv(self.sigma)),self.u0.transpose())+np.dot(np.dot(data,np.linalg.inv(self.sigma)),(self.u1-self.u0).transpose())
-            if logodds <= 0:
-                y.append(0)
+        class0[:] = [[x1 - x2 for (x1, x2) in zip(x, u0)] for x in class0]
+        class1[:] = [[x1 - x2 for (x1, x2) in zip(x, u1)] for x in class1]
+        
+        matrix0 = np.zeros((len(class0[0]), len(class0[0])))
+        matrix1 = np.zeros((len(class1[0]), len(class1[0])))
+        
+        for x in class0:
+            matrix0=np.add(matrix0, (np.array(x).reshape((-1, 1)) @ np.array(x).reshape(1, -1)))
+        for x in class1:
+            matrix1=np.add(matrix1, (np.array(x).reshape((-1, 1)) @ np.array(x).reshape(1, -1)))
+            
+        matrix = np.divide(np.add(matrix0, matrix1), np.size(y)-2)
+        self.W0 = np.log(p[1]/p[0]) + 1/2*np.dot(np.dot(np.array(u0), np.linalg.inv(matrix)), np.array(u0).reshape(-1,1)) - 1/2*np.dot(np.dot(np.array(u1), np.linalg.inv(matrix)), np.array(u1).reshape(-1,1))
+        self.W = np.dot(np.linalg.inv(matrix), np.array([x1 - x2 for (x1, x2) in zip(u1, u0)]).reshape(-1,1))
+        return
+                        
+    def predict(self, data):
+        res = []
+        for x in data:
+            val = self.W0 + np.dot(x, self.W)
+            if val > 0:
+                res.append(1)
             else:
-                y.append(1)
-        return y
-
-
+                res.append(0)
+        return res
 
 
