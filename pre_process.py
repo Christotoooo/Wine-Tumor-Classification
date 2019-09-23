@@ -99,6 +99,7 @@ def process_tumors():
     global tumors_global
     tumors_global = tumors
     tumors_x = tumors[:,:-1]
+    tumors_x = norm(tumors_x)
     #tumors_x = np.delete(tumors_x,3,axis=1) #
     tumors_y = tumors[:,-1]
 

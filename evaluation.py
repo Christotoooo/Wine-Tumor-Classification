@@ -115,20 +115,20 @@ def cross_validation(model,x: np.ndarray,y: np.ndarray, k: int):
 #
 X_wines, y_wines = process_wines()
 clf = LDA(X_wines[:int(0.8*len(X_wines))])
-print("LDA on wines",cross_validation(clf,X_wines,y_wines,5))
+print("LDA on wines",cross_validation(clf,X_wines,y_wines,4))
 
 X_tumors, y_tumors = process_tumors()
 clf = LDA(X_tumors[:int(0.8*len(X_tumors))])
-print("LDA on tumors",cross_validation(clf,X_tumors,y_tumors,5))
+print("LDA on tumors",cross_validation(clf,X_tumors,y_tumors,4))
 # #
 # #
 X_wines, y_wines = process_wines()
 clf = Logistic(0.01,1000)
-print("LR on wines",cross_validation(clf,X_wines,y_wines,5))
+print("LR on wines",cross_validation(clf,X_wines,y_wines,4))
 #
 X_tumors, y_tumors = process_tumors()
 clf = Logistic(0.001,100)
-print("LR on tumors",cross_validation(clf,X_tumors,y_tumors,5))
+print("LR on tumors",cross_validation(clf,X_tumors,y_tumors,4))
 #
 #
 #
