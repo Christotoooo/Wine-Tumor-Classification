@@ -46,22 +46,22 @@ def process_wines():
     #     for j in range(len(wines_x[0])):
     #         wines_x[i][j] -= 5
 
-    # wines_x = np.delete(wines_x,10,axis=1)
-    # wines_x = np.delete(wines_x,9,axis=1)
-    wines_x = np.delete(wines_x,8,axis=1)
-    wines_x = np.delete(wines_x,7,axis=1)
-    wines_x = np.delete(wines_x,6,axis=1)
-    wines_x = np.delete(wines_x,5,axis=1)
-    wines_x = np.delete(wines_x,4,axis=1)
-    wines_x = np.delete(wines_x,3,axis=1)
-    # wines_x = np.delete(wines_x,2,axis=1)
-    # wines_x = np.delete(wines_x,1,axis=1)
-    wines_x = np.delete(wines_x, 0, axis=1)
+    # # wines_x = np.delete(wines_x,10,axis=1)
+    # # wines_x = np.delete(wines_x,9,axis=1)
+    # wines_x = np.delete(wines_x,8,axis=1)
+    # wines_x = np.delete(wines_x,7,axis=1)
+    # wines_x = np.delete(wines_x,6,axis=1)
+    # wines_x = np.delete(wines_x,5,axis=1)
+    # wines_x = np.delete(wines_x,4,axis=1)
+    # wines_x = np.delete(wines_x,3,axis=1)
+    # # wines_x = np.delete(wines_x,2,axis=1)
+    # # wines_x = np.delete(wines_x,1,axis=1)
+    # wines_x = np.delete(wines_x, 0, axis=1)
     wines_y = wines[:, -1]
     #
     # for i in range(len(wines_x)):
     #     wines_x[i] = normalize(wines_x[i])
-    wines_x = norm(wines_x)
+    # wines_x = norm(wines_x)
 
     return wines_x, wines_y
 
@@ -99,7 +99,7 @@ def process_tumors():
     global tumors_global
     tumors_global = tumors
     tumors_x = tumors[:,:-1]
-    tumors_x = norm(tumors_x)
+    # tumors_x = norm(tumors_x) normalization
     #tumors_x = np.delete(tumors_x,3,axis=1) #
     tumors_y = tumors[:,-1]
 

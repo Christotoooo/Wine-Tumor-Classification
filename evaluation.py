@@ -11,6 +11,8 @@ import matplotlib.pyplot as plt
 from pre_process import *
 from LDA import *
 from Logistic import *
+import time
+
 
 def evaluation(prediction: np.ndarray, groundtruth: np.ndarray):
     # sanity check
@@ -113,22 +115,35 @@ def cross_validation(model,x: np.ndarray,y: np.ndarray, k: int):
 # clf = LDA()
 # print("LDA on tumors - Zachary",cross_validation(clf,X_tumors,y_tumors,5))
 #
+
 X_wines, y_wines = process_wines()
+start = time.time()
 clf = LDA(X_wines[:int(0.8*len(X_wines))])
-print("LDA on wines",cross_validation(clf,X_wines,y_wines,4))
+print("LDA on wines",cross_validation(clf,X_wines,y_wines,5))
+end = time.time()
+print("LDA on wines time", (end - start)/5)
 
 X_tumors, y_tumors = process_tumors()
+start = time.time()
 clf = LDA(X_tumors[:int(0.8*len(X_tumors))])
-print("LDA on tumors",cross_validation(clf,X_tumors,y_tumors,4))
+print("LDA on tumors",cross_validation(clf,X_tumors,y_tumors,5))
+end = time.time()
+print("LDA on tumors time", (end - start)/5)
 # #
 # #
 X_wines, y_wines = process_wines()
+start = time.time()
 clf = Logistic(0.01,1000)
-print("LR on wines",cross_validation(clf,X_wines,y_wines,4))
+print("LR on wines",cross_validation(clf,X_wines,y_wines,5))
+end = time.time()
+print("LR on wines time", (end - start)/5)
 #
 X_tumors, y_tumors = process_tumors()
-clf = Logistic(0.001,100)
-print("LR on tumors",cross_validation(clf,X_tumors,y_tumors,4))
+start = time.time()
+clf = Logistic(0.01,1000)
+print("LR on tumors",cross_validation(clf,X_tumors,y_tumors,5))
+end = time.time()
+print("LR on tumors time", (end - start)/5)
 #
 #
 #
